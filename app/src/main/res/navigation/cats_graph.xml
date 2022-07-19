@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cats_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.tuncaksoy.catschallenge.view.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homePageFragment"
+        android:name="com.tuncaksoy.catschallenge.view.HomePageFragment"
+        android:label="fragment_home_page"
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_homePageFragment_to_detailPageFragment"
+            app:destination="@id/detailPageFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_favoritesPageFragment"
+            app:destination="@id/favoritesPageFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailPageFragment"
+        android:name="com.tuncaksoy.catschallenge.view.DetailPageFragment"
+        android:label="fragment_detail_page"
+        tools:layout="@layout/fragment_detail_page" >
+        <action
+            android:id="@+id/action_detailPageFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <argument
+            android:name="catId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesPageFragment"
+        android:name="com.tuncaksoy.catschallenge.view.FavoritesPageFragment"
+        android:label="fragment_favorites_page"
+        tools:layout="@layout/fragment_favorites_page" >
+        <action
+            android:id="@+id/action_favoritesPageFragment_to_homePageFragment"
+            app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_favoritesPageFragment_to_detailPageFragment"
+            app:destination="@id/detailPageFragment" />
+        <action
+            android:id="@+id/action_favoritesPageFragment_to_detailPageFragment2"
+            app:destination="@id/detailPageFragment" />
+        <argument
+            android:name="favoritesLocationArgs"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+</navigation>

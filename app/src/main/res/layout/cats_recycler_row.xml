@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="cat"
+            type="com.tuncaksoy.catschallenge.model.Cats" />
+        <variable
+            name="listener"
+            type="com.tuncaksoy.catschallenge.adapter.CatClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:onClick="@{listener::clickCat}">
+        <TextView
+            android:id="@+id/Cat_uuid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="@{String.valueOf(cat.uuid)}"
+            ></TextView>
+
+        <ImageView
+            android:id="@+id/CatsRecyclerCatImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:layout_weight="6"
+            android:downloadImage="@{cat.catImageUrl}"
+            app:srcCompat="@drawable/no_image" />
+        <TextView
+            android:id="@+id/CatsRecyclerCatGenusText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:text="@{String.valueOf(cat.uuid)}"
+            android:gravity="center"
+
+            />
+
+        <ImageButton
+            android:id="@+id/CatsRecyclerCatFavoritesButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/favorites_no" />
+
+
+    </LinearLayout>
+
+</layout>
