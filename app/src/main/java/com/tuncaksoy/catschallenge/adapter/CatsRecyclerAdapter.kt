@@ -34,7 +34,8 @@ open class CatsRecyclerAdapter(/*val onFavouriteChanged : (String?, Boolean?) ->
     override fun onBindViewHolder(holder: CatsViewHolder, position: Int) {
         holder.view.cat = catsList[position]
         holder.view.listener = this
-        holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
+        holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener{
+
            // onFavouriteChanged(position.toString(),true)
         }
         /*
