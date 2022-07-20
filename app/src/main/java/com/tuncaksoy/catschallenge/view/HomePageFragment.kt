@@ -1,20 +1,17 @@
 package com.tuncaksoy.catschallenge.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuncaksoy.catschallenge.R
-import com.tuncaksoy.catschallenge.adapter.CatsRecyclerAdapter
+import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.fragment_home_page.*
 
@@ -22,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_home_page.*
 open class HomePageFragment : Fragment() {
 
     private lateinit var viewModel: HomePageViewModel
-    private val recyclerCatsAdapter = CatsRecyclerAdapter(arrayListOf())
+    private val recyclerCatsAdapter = CatsListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

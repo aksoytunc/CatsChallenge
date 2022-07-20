@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import com.tuncaksoy.catschallenge.R
-import com.tuncaksoy.catschallenge.adapter.CatsRecyclerAdapter
+import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
+
 import com.tuncaksoy.catschallenge.viewmodel.FavoritesPageViewModel
 import kotlinx.android.synthetic.main.fragment_favorites_page.*
 
 class FavoritesPageFragment : Fragment() {
 
     private lateinit var viewModel: FavoritesPageViewModel
-    private val recyclerCatsAdapter = CatsRecyclerAdapter(arrayListOf())
+    private val recyclerCatsAdapter = CatsListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,7 @@ class FavoritesPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-            recyclerCatsAdapter.controlLocation(location)
+            //recyclerCatsAdapter.controlLocation(location)
         }
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(FavoritesPageViewModel::class.java)

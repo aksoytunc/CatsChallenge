@@ -16,7 +16,7 @@ import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 
 
-open class CatsRecyclerAdapter(/*val onFavouriteChanged : (String?, Boolean?) -> Unit*/val catsList: ArrayList<Cats>) :
+/*open class CatsRecyclerAdapter(/*val onFavouriteChanged : (String?, Boolean?) -> Unit*/val catsList: ArrayList<Cats>) :
     RecyclerView.Adapter<CatsRecyclerAdapter.CatsViewHolder>(),CatClickListener {
     var Location = false
 
@@ -95,6 +95,6 @@ open class CatsRecyclerAdapter(/*val onFavouriteChanged : (String?, Boolean?) ->
         }
 
     }
-}
+}*/
 
 
