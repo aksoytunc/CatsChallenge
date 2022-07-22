@@ -16,7 +16,7 @@ import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 
 
-/*open class CatsRecyclerAdapter(/*val onFavouriteChanged : (String?, Boolean?) -> Unit*/val catsList: ArrayList<Cats>) :
+open class CatsRecyclerAdapter(val catsList: ArrayList<Cats>) :
     RecyclerView.Adapter<CatsRecyclerAdapter.CatsViewHolder>(),CatClickListener {
     var Location = false
 
@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.cats_recycler_row.view.*
     override fun onBindViewHolder(holder: CatsViewHolder, position: Int) {
         holder.view.cat = catsList[position]
         holder.view.listener = this
+        println(catsList)
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener{
 
            // onFavouriteChanged(position.toString(),true)
@@ -95,6 +96,6 @@ import kotlinx.android.synthetic.main.cats_recycler_row.view.*
         }
 
     }
-}*/
+}
 
 

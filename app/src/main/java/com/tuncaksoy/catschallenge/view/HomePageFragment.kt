@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
+import com.tuncaksoy.catschallenge.adapter.CatsRecyclerAdapter
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.fragment_home_page.*
 
@@ -19,7 +20,8 @@ import kotlinx.android.synthetic.main.fragment_home_page.*
 open class HomePageFragment : Fragment() {
 
     private lateinit var viewModel: HomePageViewModel
-    private val recyclerCatsAdapter = CatsListAdapter()
+    private val listAdapter = CatsListAdapter(arrayListOf())
+    //private val listAdapter = CatsRecyclerAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ open class HomePageFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         viewModel.refreshData()
         HomeRecyclerView.layoutManager = LinearLayoutManager(context)
-        HomeRecyclerView.adapter = recyclerCatsAdapter
+        HomeRecyclerView.adapter = listAdapter
         observeLiveData()
     }
 
@@ -51,7 +53,7 @@ open class HomePageFragment : Fragment() {
         viewModel.cats.observe(viewLifecycleOwner, Observer {
             it?.let {
                 HomeRecyclerView.visibility = View.VISIBLE
-                recyclerCatsAdapter.catListRefresh(it)
+                listAdapter.catListRefresh(it)
             }
         })
 
