@@ -12,9 +12,10 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
-var deneme = 1
 
 open class HomePageViewModel(application: Application) : BaseViewModel(application) {
     val cats = MutableLiveData<List<Cats>>()
@@ -22,7 +23,14 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     private val disposable = CompositeDisposable()
     private val catSharedPreferences = CatSharedPreferences(getApplication())
 
+    private val _catss = MutableStateFlow(HomeUiState(onFavoritesChanged = { catGenus ->
+        viewModelScope.launch {
+            val deneme = catGenus
+            println(deneme)
+        }
+    }))
 
+    val catss : StateFlow<HomeUiState> = _catss.asStateFlow()
 
 
     fun refreshData() {
@@ -69,3 +77,7 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     }
 
 }
+
+data class HomeUiState(
+    val onFavoritesChanged: (String?) -> Unit
+)

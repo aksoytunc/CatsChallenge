@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
+import com.tuncaksoy.catschallenge.databinding.FragmentHomePageBinding
 
 import com.tuncaksoy.catschallenge.viewmodel.FavoritesPageViewModel
 import kotlinx.android.synthetic.main.fragment_favorites_page.*
@@ -17,7 +18,11 @@ import kotlinx.android.synthetic.main.fragment_favorites_page.*
 class FavoritesPageFragment : Fragment() {
 
     private lateinit var viewModel: FavoritesPageViewModel
-    private val listAdapter = CatsListAdapter(arrayListOf())
+    //lateinit var listAdapter : CatsListAdapter
+    //private val listAdapter = CatsListAdapter(viewModel.catss.value.onFavoritesChanged,arrayListOf())
+    lateinit var listAdapter : CatsListAdapter
+    private var _binding : FragmentHomePageBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +39,11 @@ class FavoritesPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-            listAdapter.location = location
+//            listAdapter.location = location
         }
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(FavoritesPageViewModel::class.java)
+        initializeAdapter()
         viewModel.refreshData()
         FavoritesRecyclerView.layoutManager = LinearLayoutManager(context)
         FavoritesRecyclerView.adapter = listAdapter
@@ -51,5 +57,8 @@ class FavoritesPageFragment : Fragment() {
                 listAdapter.catListRefresh(it)
             }
         })
+    }
+    private fun initializeAdapter(){
+        listAdapter = CatsListAdapter(viewModel.catss.value.onFavoritesChanged, arrayListOf())
     }
 }

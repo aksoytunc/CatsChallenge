@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
 import com.tuncaksoy.catschallenge.adapter.CatsRecyclerAdapter
+import com.tuncaksoy.catschallenge.databinding.FragmentHomePageBinding
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.fragment_home_page.*
 
@@ -20,7 +21,9 @@ import kotlinx.android.synthetic.main.fragment_home_page.*
 open class HomePageFragment : Fragment() {
 
     private lateinit var viewModel: HomePageViewModel
-    private val listAdapter = CatsListAdapter(arrayListOf())
+    lateinit var listAdapter : CatsListAdapter
+    private var _binding : FragmentHomePageBinding? = null
+    private val binding get() = _binding!!
     //private val listAdapter = CatsRecyclerAdapter(arrayListOf())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +46,7 @@ open class HomePageFragment : Fragment() {
             Navigation.findNavController(it).navigate(action)
         }
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
+        initializeAdapter()
         viewModel.refreshData()
         HomeRecyclerView.layoutManager = LinearLayoutManager(context)
         HomeRecyclerView.adapter = listAdapter
@@ -57,5 +61,9 @@ open class HomePageFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun initializeAdapter(){
+        listAdapter = CatsListAdapter(viewModel.catss.value.onFavoritesChanged, arrayListOf())
     }
 }
