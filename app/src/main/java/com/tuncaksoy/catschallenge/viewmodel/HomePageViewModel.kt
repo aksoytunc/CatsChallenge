@@ -1,6 +1,7 @@
 package com.tuncaksoy.catschallenge.viewmodel
 
 import android.app.Application
+import android.content.pm.ChangedPackages
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.tuncaksoy.catschallenge.model.Cats
@@ -22,11 +23,18 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     private val CatApiServis = CatAPIServis()
     private val disposable = CompositeDisposable()
     private val catSharedPreferences = CatSharedPreferences(getApplication())
+    var positionId : Int? = null
+    var changedPositon :Int? = null
+    var positionGenus : String? = null
 
-    private val _catss = MutableStateFlow(HomeUiState(onFavoritesChanged = { catGenus ->
+    private val _catss = MutableStateFlow(HomeUiState(onFavoritesChanged = { catId, catGenus->
         viewModelScope.launch {
-            val deneme = catGenus
-            println(deneme)
+            positionGenus = catGenus
+            positionId = catId
+            println(positionId)
+            println(changedPositon)
+                getDataAPI()
+
         }
     }))
 
@@ -44,7 +52,12 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
                 .subscribeWith(object : DisposableSingleObserver<List<Cats>>() {
 
                     override fun onSuccess(t: List<Cats>) {
-                        putSQLITE(t)
+                        if (positionId != null && positionGenus != null) {
+                                if (changedPositon != positionId) {
+                                    putSQLITE(t, positionId!!, positionGenus!!)
+                                    changedPositon = positionId
+                            }
+                        }
                         showCats(t)
                     }
 
@@ -60,18 +73,20 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     }
 
 
-    fun putSQLITE(catsList: List<Cats>/*catId : Int*/) {
+    fun putSQLITE(catsList: List<Cats>,catId : Int,catGenus : String) {
         viewModelScope.launch(Dispatchers.IO) {
             val dao = CatDatabase(getApplication()).catDao()
-            dao.deleteAllCat()
-            //dao.insert(catsList[catId])
+            //dao.deleteAllCat()
+            dao.insert(catsList[catId])
+            dao.deleteCat(catGenus)
+            println(catsList[catId])
             //dao.insertAll(cats)
-            val uuidListesi = dao.insertAll(*catsList.toTypedArray())
+            /*val uuidListesi = dao.insertAll(*catsList.toTypedArray())
             var i = 0
             while (i < catsList.size) {
                 catsList[i].uuid = uuidListesi[i].toInt()
                 i = i + 1
-            }
+            }*/
         }
         catSharedPreferences.saveTime(System.nanoTime())
     }
@@ -79,5 +94,5 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
 }
 
 data class HomeUiState(
-    val onFavoritesChanged: (String?) -> Unit
+    val onFavoritesChanged: (Int?, String?) -> Unit
 )

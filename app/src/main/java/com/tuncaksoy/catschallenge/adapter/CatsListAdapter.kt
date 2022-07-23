@@ -17,7 +17,7 @@ import com.tuncaksoy.catschallenge.view.HomePageFragmentDirections
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 
 
-class CatsListAdapter(var onFAvoritesChanged : (String?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
+class CatsListAdapter(var onFAvoritesChanged : (Int?, String?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
     var location = false
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) : RecyclerView.ViewHolder(view.root) {
 
@@ -40,7 +40,7 @@ class CatsListAdapter(var onFAvoritesChanged : (String?) -> Unit ,val catsList :
         holder.view.listener = this
         //holder.view.executePendingBindings()
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
-            onFAvoritesChanged("Geldi")
+            onFAvoritesChanged(position,catsList[position].catGenus)
         }
     }
 

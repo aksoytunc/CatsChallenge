@@ -39,7 +39,7 @@ class FavoritesPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         arguments?.let {
             var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-//            listAdapter.location = location
+//          listAdapter.location = location
         }
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(FavoritesPageViewModel::class.java)

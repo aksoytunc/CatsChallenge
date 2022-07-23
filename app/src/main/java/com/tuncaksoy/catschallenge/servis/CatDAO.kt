@@ -1,6 +1,7 @@
 package com.tuncaksoy.catschallenge.servis
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.tuncaksoy.catschallenge.model.Cats
@@ -21,4 +22,7 @@ interface CatDAO {
 
     @Query("DELETE FROM cats")
     fun deleteAllCat()
+
+    @Query("DELETE FROM cats Where isim = :catGenus")
+    fun deleteCat(catGenus : String)
 }
