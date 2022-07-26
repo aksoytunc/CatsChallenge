@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 open class FavoritesPageViewModel(application: Application) : BaseViewModel(application) {
     val cats = MutableLiveData<List<Cats>>()
 
-    private val __catss = MutableStateFlow(HomeUiState(onFavoritesChanged = { catId,catGenus ->
+    private val __catss = MutableStateFlow(HomeUiState(onFavoritesChanged = { catId,catGenus,catFavorites ->
         viewModelScope.launch {
             val deneme = catGenus
             println(deneme)

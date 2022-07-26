@@ -12,13 +12,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.databinding.CatsRecyclerRowBinding
 import com.tuncaksoy.catschallenge.model.Cats
+import com.tuncaksoy.catschallenge.servis.CatDatabase
 import com.tuncaksoy.catschallenge.view.FavoritesPageFragmentDirections
 import com.tuncaksoy.catschallenge.view.HomePageFragmentDirections
+import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 
 
-class CatsListAdapter(var onFAvoritesChanged : (Int?, String?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
+class CatsListAdapter(var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
+
     var location = false
+    var favorites = false
+
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) : RecyclerView.ViewHolder(view.root) {
 
     }
@@ -39,15 +44,23 @@ class CatsListAdapter(var onFAvoritesChanged : (Int?, String?) -> Unit ,val cats
         holder.view.cat = catsList[position]
         holder.view.listener = this
         //holder.view.executePendingBindings()
+        val item = catsList[position]
+
+
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
-            onFAvoritesChanged(position,catsList[position].catGenus)
+            if (item.catFavorites==true)
+                favorites = false
+            else
+                favorites = true
+                catsList[position].catFavorites=true
+            onFAvoritesChanged(position,catsList[position].catGenus,favorites)
         }
     }
 
     class CatsDiffCallback : DiffUtil.ItemCallback<Cats>() {
 
         override fun areItemsTheSame(oldItem: Cats, newItem: Cats): Boolean {
-            return oldItem.catGenus == newItem.catGenus
+            return oldItem.catGenus == newItem.catGenus // && oldItem.catFavorites == newItem.catFavorites
         }
 
         override fun areContentsTheSame(oldItem: Cats, newItem: Cats): Boolean {
@@ -68,14 +81,14 @@ class CatsListAdapter(var onFAvoritesChanged : (Int?, String?) -> Unit ,val cats
     override fun clickCat(view: View) {
         val uuid = view.Cat_uuid.text.toString().toIntOrNull()
         uuid?.let{
-            if (location) {
+            if (!location) {
                 val action2 = FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailPageFragment(it)
                 Navigation.findNavController(view).navigate(action2)
             } else {
                 val action = HomePageFragmentDirections.actionHomePageFragmentToDetailPageFragment(it)
+                println(it)
                 Navigation.findNavController(view).navigate(action)
                 Log.d("bb",it.toString())
-
             }
         }
     }

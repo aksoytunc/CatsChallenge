@@ -18,7 +18,10 @@ data class Cats(
     val catWikipediaUrl: String?,
     @ColumnInfo(name = "gorsel")
     @SerializedName("gorsel")
-    val catImageUrl: String?
+    val catImageUrl: String?,
+    @ColumnInfo(name = "favorites")
+    @SerializedName("favorites")
+    var catFavorites : Boolean?
 ) {
 @PrimaryKey(autoGenerate = true)
 var uuid : Int = 0
