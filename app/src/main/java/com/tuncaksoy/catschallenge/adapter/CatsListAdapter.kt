@@ -19,9 +19,7 @@ import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 
 
-class CatsListAdapter(var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
-
-    var location = false
+class CatsListAdapter(var location : Boolean,var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
     var favorites = false
 
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) : RecyclerView.ViewHolder(view.root) {
@@ -48,11 +46,6 @@ class CatsListAdapter(var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit 
 
 
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
-            if (item.catFavorites==true)
-                favorites = false
-            else
-                favorites = true
-                catsList[position].catFavorites=true
             onFAvoritesChanged(position,catsList[position].catGenus,favorites)
         }
     }
@@ -81,7 +74,7 @@ class CatsListAdapter(var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit 
     override fun clickCat(view: View) {
         val uuid = view.Cat_uuid.text.toString().toIntOrNull()
         uuid?.let{
-            if (!location) {
+            if (location) {
                 val action2 = FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailPageFragment(it)
                 Navigation.findNavController(view).navigate(action2)
             } else {

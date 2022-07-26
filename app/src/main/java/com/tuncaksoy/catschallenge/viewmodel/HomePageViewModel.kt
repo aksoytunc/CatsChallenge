@@ -1,7 +1,6 @@
 package com.tuncaksoy.catschallenge.viewmodel
 
 import android.app.Application
-import android.content.pm.ChangedPackages
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.ArrayList
+
 
 open class HomePageViewModel(application: Application) : BaseViewModel(application) {
     val cats = MutableLiveData<List<Cats>>()
@@ -39,7 +38,6 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
                 println(positionId)
                 println(changedPositon)
                 getDataAPI()
-
             }
         }))
 

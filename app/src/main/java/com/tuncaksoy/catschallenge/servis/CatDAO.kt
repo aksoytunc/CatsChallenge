@@ -17,7 +17,7 @@ interface CatDAO {
     @Query("SELECT * FROM Cats")
     fun getAllCat() : List<Cats>
 
-    @Query("SELECT * FROM Cats ORDER BY isim")
+    @Query("SELECT * FROM Cats WHERE isim")
     fun getAllGenus() : List<Cats>
 
     @Query("SELECT * FROM cats WHERE uuid = :uuid")

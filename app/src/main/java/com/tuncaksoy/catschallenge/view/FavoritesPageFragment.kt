@@ -26,10 +26,7 @@ class FavoritesPageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-            //listAdapter.location = location
-        }
+
     }
 
     override fun onCreateView(
@@ -44,6 +41,7 @@ class FavoritesPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(FavoritesPageViewModel::class.java)
         initializeAdapter()
+
         viewModel.refreshData()
         FavoritesRecyclerView.layoutManager = LinearLayoutManager(context)
         FavoritesRecyclerView.adapter = listAdapter
@@ -59,6 +57,11 @@ class FavoritesPageFragment : Fragment() {
         })
     }
     private fun initializeAdapter(){
-        listAdapter = CatsListAdapter(viewModel.catss.value.onFavoritesChanged, arrayListOf())
+        arguments?.let {
+            var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
+            listAdapter = CatsListAdapter(location, viewModel.catss.value.onFavoritesChanged, arrayListOf())
+        }
+
+
     }
 }
