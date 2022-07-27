@@ -23,13 +23,13 @@ class FavoritesPageFragment : Fragment() {
     lateinit var listAdapter : CatsListAdapter
     private var _binding : FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
 
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
@@ -59,7 +59,7 @@ class FavoritesPageFragment : Fragment() {
     private fun initializeAdapter(){
         arguments?.let {
             var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-            listAdapter = CatsListAdapter(location, viewModel.catss.value.onFavoritesChanged, arrayListOf())
+            listAdapter = CatsListAdapter(3,location, viewModel.catss.value.onFavoritesChanged, arrayListOf())
         }
 
 

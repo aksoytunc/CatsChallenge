@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
 import com.tuncaksoy.catschallenge.model.Cats
 import com.tuncaksoy.catschallenge.servis.CatAPIServis
 import com.tuncaksoy.catschallenge.servis.CatDatabase
@@ -28,6 +29,8 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     var changedPositon: Int? = null
     var positionGenus: String? = null
     var positionFavorites: Boolean? = null
+    lateinit var favoritesList: List<Cats>
+    var favoritesNumberList : Int = 0
 
     private val _catss =
         MutableStateFlow(HomeUiState(onFavoritesChanged = { catId, catGenus, catFavorites ->
@@ -45,7 +48,9 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
 
 
     fun refreshData() {
+        favoritesNumberList = 4
         getDataAPI()
+
     }
 
     private fun getDataAPI() {
@@ -72,28 +77,31 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     }
 
     private fun showCats(catsList: List<Cats>) {
+
         cats.postValue(catsList)
+
+
     }
 
 
     fun putSQLITE(catsList: List<Cats>, catId: Int, catGenus: String, catFavorites: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             val dao = CatDatabase(getApplication()).catDao()
-            Log.d("selam","catGenus" + catGenus)
-            val favoritesList = dao.getAllGenus()
+            Log.d("selam", "catGenus" + catGenus)
+            favoritesList = dao.getAllGenus()
             var catFavoritess = false
-            if (favoritesList.size!=0){
+            if (favoritesList.size != 0) {
                 var i = 0
-                while(i<favoritesList.size) {
+                while (i < favoritesList.size) {
                     var favoritesGenus = favoritesList[i].catGenus
                     i++
-                    Log.d("selam","favoritesGenusif->"+favoritesGenus)
+                    Log.d("selam", "favoritesGenusif->" + favoritesGenus)
                     if (catGenus == favoritesGenus) {
                         catFavoritess = true
                     }
                 }
             }
-            Log.d("selam","CatFavorites->" + catFavoritess.toString())
+            Log.d("selam", "CatFavorites->" + catFavoritess.toString())
             //println(favoritesList)
             //dao.deleteAllCat()
             if (catFavoritess == true) {
@@ -110,6 +118,22 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
                 catsList[i].uuid = uuidListesi[i].toInt()
                 i = i + 1
             }*/
+
+            if (catsList.size != 0 && favoritesList.size != 0) {
+                var i = 0
+                 while (i < catsList.size) {
+                     var k = 0
+                     while (k < favoritesList.size) {
+                         if (catsList[i] == favoritesList[k]) {
+                             var j = 0
+                             //favoritesNumberList
+                             j++
+                         }
+                         k++
+                     }
+                     i++
+                 }
+            }
         }
         catSharedPreferences.saveTime(System.nanoTime())
     }

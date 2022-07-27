@@ -17,14 +17,17 @@ import com.tuncaksoy.catschallenge.view.FavoritesPageFragmentDirections
 import com.tuncaksoy.catschallenge.view.HomePageFragmentDirections
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
+import kotlinx.android.synthetic.main.fragment_splash.view.*
 
 
-class CatsListAdapter(var location : Boolean,var onFAvoritesChanged : (Int?, String?,Boolean?) -> Unit ,val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
+class CatsListAdapter(var favoritesNumberList : Int, var location : Boolean, var onFAvoritesChanged : (Int?, String?, Boolean?) -> Unit, val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
     var favorites = false
 
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) : RecyclerView.ViewHolder(view.root) {
 
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -42,7 +45,11 @@ class CatsListAdapter(var location : Boolean,var onFAvoritesChanged : (Int?, Str
         holder.view.cat = catsList[position]
         holder.view.listener = this
         //holder.view.executePendingBindings()
-        val item = catsList[position]
+        Log.d("msg",favoritesNumberList.toString())
+
+        if (favoritesNumberList==4){
+            holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_yes)
+        }
 
 
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {

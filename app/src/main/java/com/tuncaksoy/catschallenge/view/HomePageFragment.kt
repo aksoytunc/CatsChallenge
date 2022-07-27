@@ -65,6 +65,6 @@ open class HomePageFragment : Fragment() {
 
     private fun initializeAdapter(){
         val location = false
-        listAdapter = CatsListAdapter(location,viewModel.catss.value.onFavoritesChanged, arrayListOf())
+        listAdapter = CatsListAdapter(viewModel.favoritesNumberList,location,viewModel.catss.value.onFavoritesChanged, arrayListOf())
     }
 }
