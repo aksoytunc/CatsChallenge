@@ -4,6 +4,5 @@ import android.view.View
 
 interface CatClickListener {
 
-
     fun clickCat(view: View)
 }

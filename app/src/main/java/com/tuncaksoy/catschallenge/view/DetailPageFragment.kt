@@ -18,7 +18,8 @@ class DetailPageFragment : Fragment() {
 
     private lateinit var viewModel: DetailPageViewModel
     private var catId = 0
-
+    private var location = false
+    private var position = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +39,17 @@ class DetailPageFragment : Fragment() {
 
         arguments?.let {
             catId = DetailPageFragmentArgs.fromBundle(it).catId
+            location = DetailPageFragmentArgs.fromBundle(it).location
+            position = DetailPageFragmentArgs.fromBundle(it).catPosition
         }
         viewModel = ViewModelProvider(this).get(DetailPageViewModel::class.java)
-        viewModel.getRoomData(catId)
+
+        if (location){
+            viewModel.getRoomData(catId)
+        }
+        else{
+            viewModel.getDataAPI(position)
+        }
         observeLiveData()
 
     }

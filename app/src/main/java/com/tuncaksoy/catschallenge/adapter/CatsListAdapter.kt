@@ -17,6 +17,7 @@ import com.tuncaksoy.catschallenge.view.FavoritesPageFragmentDirections
 import com.tuncaksoy.catschallenge.view.HomePageFragmentDirections
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
+import kotlinx.android.synthetic.main.fragment_home_page.view.*
 import kotlinx.android.synthetic.main.fragment_splash.view.*
 
 
@@ -28,6 +29,7 @@ class CatsListAdapter(
 ) : ListAdapter<Cats, CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()), CatClickListener {
     var favorites = false
     var i = 0
+    var positionId = 0
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) :
         RecyclerView.ViewHolder(view.root) {
 
@@ -49,6 +51,7 @@ class CatsListAdapter(
 
         holder.view.cat = catsList[position]
         holder.view.listener = this
+        positionId = position
         //holder.view.executePendingBindings()
         //Log.d("tft", favoritesNumberList.toString())
         i=0
@@ -63,7 +66,6 @@ class CatsListAdapter(
             }
             i++
         }
-
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
             onFAvoritesChanged(position, catsList[position].catGenus, favorites)
         }
@@ -91,18 +93,22 @@ class CatsListAdapter(
         return catsList.size
     }
 
+
     override fun clickCat(view: View) {
         val uuid = view.Cat_uuid.text.toString().toIntOrNull()
+        positionId =
+        Log.d("positionId",positionId.toString())
+        //TODO
         uuid?.let {
             if (location) {
                 val action2 =
                     FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailPageFragment(
-                        it
+                        it,location
                     )
                 Navigation.findNavController(view).navigate(action2)
             } else {
                 val action =
-                    HomePageFragmentDirections.actionHomePageFragmentToDetailPageFragment(it)
+                    HomePageFragmentDirections.actionHomePageFragmentToDetailPageFragment(it,location,positionId)
                 println(it)
                 Navigation.findNavController(view).navigate(action)
                 Log.d("bb", it.toString())
