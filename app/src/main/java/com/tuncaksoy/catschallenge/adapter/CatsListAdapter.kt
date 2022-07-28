@@ -20,13 +20,18 @@ import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 import kotlinx.android.synthetic.main.fragment_splash.view.*
 
 
-class CatsListAdapter(var favoritesNumberList : Int, var location : Boolean, var onFAvoritesChanged : (Int?, String?, Boolean?) -> Unit, val catsList :ArrayList<Cats>) : ListAdapter<Cats,CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()),CatClickListener {
+class CatsListAdapter(
+    var favoritesNumberList : ArrayList<Int>,
+    var location: Boolean,
+    var onFAvoritesChanged: (Int?, String?, Boolean?) -> Unit,
+    val catsList: ArrayList<Cats>
+) : ListAdapter<Cats, CatsListAdapter.CatsListViewHolder>(CatsDiffCallback()), CatClickListener {
     var favorites = false
-
-    class CatsListViewHolder(var view: CatsRecyclerRowBinding) : RecyclerView.ViewHolder(view.root) {
+    var i = 0
+    class CatsListViewHolder(var view: CatsRecyclerRowBinding) :
+        RecyclerView.ViewHolder(view.root) {
 
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -45,15 +50,22 @@ class CatsListAdapter(var favoritesNumberList : Int, var location : Boolean, var
         holder.view.cat = catsList[position]
         holder.view.listener = this
         //holder.view.executePendingBindings()
-        Log.d("msg",favoritesNumberList.toString())
-
-        if (favoritesNumberList==4){
-            holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_yes)
+        //Log.d("tft", favoritesNumberList.toString())
+        i=0
+        while (i<favoritesNumberList.size) {
+            Log.d("tftt", favoritesNumberList[i].toString()+"--"+position.toString())
+            if (favoritesNumberList[i] == position) {
+                i=favoritesNumberList.size
+                holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_yes)
+            }
+            else{
+                holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_no)
+            }
+            i++
         }
 
-
         holder.view.CatsRecyclerCatFavoritesButton.setOnClickListener {
-            onFAvoritesChanged(position,catsList[position].catGenus,favorites)
+            onFAvoritesChanged(position, catsList[position].catGenus, favorites)
         }
     }
 
@@ -74,21 +86,26 @@ class CatsListAdapter(var favoritesNumberList : Int, var location : Boolean, var
         catsList.addAll(newCatList)
         notifyDataSetChanged()//adapter içerisinde olmasak adapter.notifyData... diye çağırılacaktır
     }
+
     override fun getItemCount(): Int {
         return catsList.size
     }
 
     override fun clickCat(view: View) {
         val uuid = view.Cat_uuid.text.toString().toIntOrNull()
-        uuid?.let{
+        uuid?.let {
             if (location) {
-                val action2 = FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailPageFragment(it)
+                val action2 =
+                    FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailPageFragment(
+                        it
+                    )
                 Navigation.findNavController(view).navigate(action2)
             } else {
-                val action = HomePageFragmentDirections.actionHomePageFragmentToDetailPageFragment(it)
+                val action =
+                    HomePageFragmentDirections.actionHomePageFragmentToDetailPageFragment(it)
                 println(it)
                 Navigation.findNavController(view).navigate(action)
-                Log.d("bb",it.toString())
+                Log.d("bb", it.toString())
             }
         }
     }

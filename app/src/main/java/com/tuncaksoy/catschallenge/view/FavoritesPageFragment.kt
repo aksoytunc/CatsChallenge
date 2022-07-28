@@ -59,7 +59,7 @@ class FavoritesPageFragment : Fragment() {
     private fun initializeAdapter(){
         arguments?.let {
             var location = FavoritesPageFragmentArgs.fromBundle(it).favoritesLocationArgs
-            listAdapter = CatsListAdapter(3,location, viewModel.catss.value.onFavoritesChanged, arrayListOf())
+            listAdapter = CatsListAdapter(ArrayList(0),location, viewModel.catss.value.onFavoritesChanged, arrayListOf())
         }
 
 

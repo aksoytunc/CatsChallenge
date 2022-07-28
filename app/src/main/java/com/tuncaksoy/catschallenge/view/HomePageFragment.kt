@@ -12,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
-import com.tuncaksoy.catschallenge.adapter.CatsRecyclerAdapter
 import com.tuncaksoy.catschallenge.databinding.FragmentHomePageBinding
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.fragment_home_page.*
@@ -51,6 +50,7 @@ open class HomePageFragment : Fragment() {
         HomeRecyclerView.layoutManager = LinearLayoutManager(context)
         HomeRecyclerView.adapter = listAdapter
         observeLiveData()
+
     }
 
     fun observeLiveData() {

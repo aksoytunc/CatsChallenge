@@ -30,7 +30,7 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     var positionGenus: String? = null
     var positionFavorites: Boolean? = null
     lateinit var favoritesList: List<Cats>
-    var favoritesNumberList : Int = 0
+    var favoritesNumberList = arrayListOf<Int>()
 
     private val _catss =
         MutableStateFlow(HomeUiState(onFavoritesChanged = { catId, catGenus, catFavorites ->
@@ -48,7 +48,9 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
 
 
     fun refreshData() {
-        favoritesNumberList = 4
+
+        Log.d("msgh",favoritesNumberList.toString())
+
         getDataAPI()
 
     }
@@ -66,6 +68,8 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
                                 changedPositon = positionId
                             }
                         }
+                        favoritesNumberList.clear()
+                        btnBackgraundImage(t)
                         showCats(t)
                     }
 
@@ -80,7 +84,30 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
 
         cats.postValue(catsList)
 
+    }
 
+    fun btnBackgraundImage(catsList: List<Cats>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val dao = CatDatabase(getApplication()).catDao()
+            favoritesList = dao.getAllCat()
+            if (catsList.size != 0 && favoritesList.size != 0) {
+                var i = 0
+                var j = 0
+
+                while (i < catsList.size) {
+                    var k = 0
+                    while (k < favoritesList.size) {
+                        if (catsList[i].catGenus == favoritesList[k].catGenus) {
+                            favoritesNumberList.add(j,i)
+                            //Log.d("msgy", favoritesNumberList[j].toString())
+                            j++
+                        }
+                        k++
+                    }
+                    i++
+                }
+            }
+        }
     }
 
 
@@ -88,7 +115,8 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             val dao = CatDatabase(getApplication()).catDao()
             Log.d("selam", "catGenus" + catGenus)
-            favoritesList = dao.getAllGenus()
+            favoritesList = dao.getAllCat()
+            println(favoritesList)
             var catFavoritess = false
             if (favoritesList.size != 0) {
                 var i = 0
@@ -119,21 +147,21 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
                 i = i + 1
             }*/
 
-            if (catsList.size != 0 && favoritesList.size != 0) {
+            /*if (catsList.size != 0 && favoritesList.size != 0) {
                 var i = 0
                  while (i < catsList.size) {
                      var k = 0
                      while (k < favoritesList.size) {
                          if (catsList[i] == favoritesList[k]) {
                              var j = 0
-                             //favoritesNumberList
+                            // favoritesNumberList
                              j++
                          }
                          k++
                      }
                      i++
                  }
-            }
+            }*/
         }
         catSharedPreferences.saveTime(System.nanoTime())
     }
