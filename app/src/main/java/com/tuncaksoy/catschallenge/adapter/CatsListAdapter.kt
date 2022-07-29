@@ -1,5 +1,6 @@
 package com.tuncaksoy.catschallenge.adapter
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +20,8 @@ import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.cats_recycler_row.view.*
 import kotlinx.android.synthetic.main.fragment_home_page.view.*
 import kotlinx.android.synthetic.main.fragment_splash.view.*
+import kotlinx.coroutines.joinAll
+import java.util.logging.Filter
 
 
 class CatsListAdapter(
@@ -30,10 +33,22 @@ class CatsListAdapter(
     var favorites = false
     var i = 0
     var positionId = 0
+    lateinit var mContext: Context
+    var catsFilterList = ArrayList<String?>()
     class CatsListViewHolder(var view: CatsRecyclerRowBinding) :
         RecyclerView.ViewHolder(view.root) {
 
     }
+
+    init {
+        var d = 0
+        while (d<catsList.size){
+            catsFilterList.add(catsList[d].catGenus)
+            d++
+        }
+
+    }
+
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatsListViewHolder {
@@ -89,6 +104,8 @@ class CatsListAdapter(
         notifyDataSetChanged()//adapter içerisinde olmasak adapter.notifyData... diye çağırılacaktır
     }
 
+
+
     override fun getItemCount(): Int {
         return catsList.size
     }
@@ -115,4 +132,6 @@ class CatsListAdapter(
             }
         }
     }
+
+
 }

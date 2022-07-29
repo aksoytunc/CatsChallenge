@@ -2,8 +2,10 @@ package com.tuncaksoy.catschallenge.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.tuncaksoy.catschallenge.R
 import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
 import com.tuncaksoy.catschallenge.model.Cats
 import com.tuncaksoy.catschallenge.servis.CatAPIServis
@@ -52,6 +54,10 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
         Log.d("msgh",favoritesNumberList.toString())
 
         getDataAPI()
+
+    }
+
+    fun search(){
 
     }
 

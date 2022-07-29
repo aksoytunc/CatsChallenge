@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -43,6 +44,9 @@ open class HomePageFragment : Fragment() {
         HomeFavoritesButton.setOnClickListener {
             val action = HomePageFragmentDirections.actionHomePageFragmentToFavoritesPageFragment(true)
             Navigation.findNavController(it).navigate(action)
+        }
+        searchView.setOnClickListener(){
+            println("searching")
         }
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         initializeAdapter()
