@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
@@ -101,6 +102,8 @@ class CatsListAdapter(
     fun catListRefresh(newCatList: List<Cats>) {
         catsList.clear()
         catsList.addAll(newCatList)
+        /*  val k = catsList.filter { it.catFavorites == true  }
+        k[0].catGenus*/ //*****muhakkak kullan*****
         notifyDataSetChanged()//adapter içerisinde olmasak adapter.notifyData... diye çağırılacaktır
     }
 
@@ -110,11 +113,12 @@ class CatsListAdapter(
         return catsList.size
     }
 
-
-    override fun clickCat(view: View) {
+    //@BindingAdapter("app:a")
+   override fun clickCat(view: View) {
         val uuid = view.Cat_uuid.text.toString().toIntOrNull()
-        positionId =
-        Log.d("positionId",positionId.toString())
+
+       // positionId =
+
         //TODO
         uuid?.let {
             if (location) {
@@ -132,6 +136,4 @@ class CatsListAdapter(
             }
         }
     }
-
-
 }
