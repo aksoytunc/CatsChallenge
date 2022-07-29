@@ -38,5 +38,4 @@ data class Image(
 }
 
 //https://api.thecatapi.com/v1/breeds?limit=10&page=0?ae76962b-bfd9-406a-8d88-1a3965c41ad9
-//asdasd
 //https://api.thecatapi.com/v1/breeds/search?q=abc&api_key=824bd368-5bee-40a7-9deb-f0191db337f2 son bu
