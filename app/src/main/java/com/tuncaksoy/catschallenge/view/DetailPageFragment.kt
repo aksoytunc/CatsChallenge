@@ -61,7 +61,7 @@ class DetailPageFragment : Fragment() {
                 DetailDefinitionText.text = it.catDefinition
                 DetailUrlText.text = it.catWikipediaUrl
                 context?.let {
-                    DetailImage.downloadImage(cat.catImageUrl, createPlaceholder(it))
+                    DetailImage.downloadImage(cat.image.url, createPlaceholder(it))
                 }
 
             }

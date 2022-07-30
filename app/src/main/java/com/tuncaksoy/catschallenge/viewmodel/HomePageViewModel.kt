@@ -54,11 +54,30 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
         Log.d("msgh",favoritesNumberList.toString())
 
         getDataAPI()
-
+        //search()
     }
 
     fun search(){
+        disposable.add((CatApiServis.getSearchCat().subscribeOn(Schedulers.newThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(object : DisposableSingleObserver<List<Cats>>(){
 
+                override fun onSuccess(t: List<Cats>) {
+                    if (positionId != null && positionGenus != null) {
+                        if (changedPositon != positionId) {
+                            putSQLITE(t, positionId!!, positionGenus!!, positionFavorites!!)
+                            changedPositon = positionId
+                        }
+                    }
+                    favoritesNumberList.clear()
+                    btnBackgraundImage(t)
+                    showCats(t)
+                }
+
+                override fun onError(e: Throwable) {
+                    e.printStackTrace()
+                }
+            })))
     }
 
     private fun getDataAPI() {

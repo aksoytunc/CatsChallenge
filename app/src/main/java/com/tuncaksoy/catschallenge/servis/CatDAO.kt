@@ -17,18 +17,18 @@ interface CatDAO {
     @Query("SELECT * FROM Cats")
     fun getAllCat() : List<Cats>
 
-    @Query("SELECT * FROM Cats WHERE isim")
+    @Query("SELECT * FROM Cats WHERE id")
     fun getAllGenus() : List<Cats>
 
     @Query("SELECT * FROM cats WHERE uuid = :uuid")
     fun getCat(uuid : Int) : Cats
 
-    @Query("SELECT * FROM cats WHERE isim = :catGenus")
+    @Query("SELECT * FROM cats WHERE id = :catGenus")
     fun getCatGenus(catGenus: String) : Cats
 
     @Query("DELETE FROM cats")
     fun deleteAllCat()
 
-    @Query("DELETE FROM cats Where isim = :catGenus")
+    @Query("DELETE FROM cats Where id = :catGenus")
     fun deleteCat(catGenus : String)
 }

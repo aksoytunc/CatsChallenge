@@ -45,7 +45,7 @@ open class HomePageFragment : Fragment() {
             val action = HomePageFragmentDirections.actionHomePageFragmentToFavoritesPageFragment(true)
             Navigation.findNavController(it).navigate(action)
         }
-        searchView.setOnClickListener(){
+        searchCatsView.setOnClickListener(){
             println("searching")
         }
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)

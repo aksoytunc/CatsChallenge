@@ -26,5 +26,7 @@ fun createPlaceholder(context: Context) : CircularProgressDrawable{
 }
 @BindingAdapter("android:downloadImage")
 fun downloadImage2(view: ImageView, url : String?){
-    view.downloadImage(url, createPlaceholder(view.context))
+    if(url!=null) {
+        view.downloadImage(url, createPlaceholder(view.context))
+    }
 }

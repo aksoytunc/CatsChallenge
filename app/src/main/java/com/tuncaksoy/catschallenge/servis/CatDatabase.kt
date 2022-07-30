@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.tuncaksoy.catschallenge.model.Cats
+import com.tuncaksoy.catschallenge.model.TypeConverter
 
 @Database(entities = arrayOf(Cats::class), version = 1)
+@TypeConverters(TypeConverter::class)
 
 abstract class CatDatabase : RoomDatabase() {
 

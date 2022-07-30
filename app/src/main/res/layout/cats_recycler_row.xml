@@ -29,14 +29,15 @@
             android:layout_height="match_parent"
             android:layout_margin="3dp"
             android:layout_weight="6"
-            android:downloadImage="@{cat.catImageUrl}"
+            android:downloadImage="@{cat.image.url}"
             app:srcCompat="@drawable/no_image" />
+        <!---->
         <TextView
             android:id="@+id/CatsRecyclerCatGenusText"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8"
-            android:text="@{String.valueOf(cat.uuid)}"
+            android:text="@{cat.catGenus}"
             android:gravity="center"
 
             />
