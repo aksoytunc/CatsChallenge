@@ -9,6 +9,10 @@
         <variable
             name="listener"
             type="com.tuncaksoy.catschallenge.adapter.CatClickListener" />
+
+        <variable
+            name="favorites"
+            type="boolean" />
     </data>
 
     <LinearLayout
@@ -48,7 +52,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:scaleType="fitCenter"
-            android:src="@drawable/favorites_no" />
+            android:src="@{favorites ? @drawable/favorites_no : @drawable/favorites_yes}" />
 
 
     </LinearLayout>

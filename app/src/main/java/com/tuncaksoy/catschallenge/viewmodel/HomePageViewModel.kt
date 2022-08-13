@@ -11,6 +11,7 @@ import com.tuncaksoy.catschallenge.model.Cats
 import com.tuncaksoy.catschallenge.servis.CatAPIServis
 import com.tuncaksoy.catschallenge.servis.CatDatabase
 import com.tuncaksoy.catschallenge.util.CatSharedPreferences
+import com.tuncaksoy.catschallenge.view.HomePageFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
@@ -33,6 +34,7 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     var positionFavorites: Boolean? = null
     lateinit var favoritesList: List<Cats>
     var favoritesNumberList = arrayListOf<Int>()
+    val deneme : String = ""
 
     private val _catss =
         MutableStateFlow(HomeUiState(onFavoritesChanged = { catId, catGenus, catFavorites ->
@@ -52,13 +54,12 @@ open class HomePageViewModel(application: Application) : BaseViewModel(applicati
     fun refreshData() {
 
         Log.d("msgh",favoritesNumberList.toString())
-
         getDataAPI()
-        //search()
+
     }
 
-    fun search(){
-        disposable.add((CatApiServis.getSearchCat().subscribeOn(Schedulers.newThread())
+    fun search(searchKey : String?){
+        disposable.add((CatApiServis.getSearchCat(searchKey).subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeWith(object : DisposableSingleObserver<List<Cats>>(){
 

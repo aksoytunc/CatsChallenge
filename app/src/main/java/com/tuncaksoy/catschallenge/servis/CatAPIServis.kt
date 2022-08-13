@@ -22,8 +22,8 @@ class CatAPIServis {
         return api.getCats()
     }
 
-    fun getSearchCat() : Single<List<Cats>>{
-        return api.searchCat("a","0?ae76962b-bfd9-406a-8d88-1a3965c41ad9")
+    fun getSearchCat(searchKey : String?) : Single<List<Cats>>{
+        return api.searchCat("0?ae76962b-bfd9-406a-8d88-1a3965c41ad9",searchKey)
     }
 }
 

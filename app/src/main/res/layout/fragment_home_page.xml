@@ -40,6 +40,7 @@
             android:layout_marginTop="8dp"
             android:accessibilityLiveRegion="none"
             android:baselineAligned="false"
+            android:clickable="false"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.428"

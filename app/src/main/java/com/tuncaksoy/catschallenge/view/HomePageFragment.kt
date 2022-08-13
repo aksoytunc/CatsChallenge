@@ -16,15 +16,19 @@ import com.tuncaksoy.catschallenge.adapter.CatsListAdapter
 import com.tuncaksoy.catschallenge.databinding.FragmentHomePageBinding
 import com.tuncaksoy.catschallenge.viewmodel.HomePageViewModel
 import kotlinx.android.synthetic.main.fragment_home_page.*
+import kotlinx.android.synthetic.main.fragment_home_page.view.*
+import kotlinx.android.synthetic.main.fragment_splash.view.*
+import okhttp3.internal.http2.Http2Connection
 
 
 open class HomePageFragment : Fragment() {
+
 
     private lateinit var viewModel: HomePageViewModel
     lateinit var listAdapter : CatsListAdapter
     private var _binding : FragmentHomePageBinding? = null
     private val binding get() = _binding!!
-    //private val listAdapter = CatsRecyclerAdapter(arrayListOf())
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +49,7 @@ open class HomePageFragment : Fragment() {
             val action = HomePageFragmentDirections.actionHomePageFragmentToFavoritesPageFragment(true)
             Navigation.findNavController(it).navigate(action)
         }
-        searchCatsView.setOnClickListener(){
-            println("searching")
-        }
+
         viewModel = ViewModelProvider(this).get(HomePageViewModel::class.java)
         initializeAdapter()
         viewModel.refreshData()
@@ -55,6 +57,32 @@ open class HomePageFragment : Fragment() {
         HomeRecyclerView.adapter = listAdapter
         observeLiveData()
 
+        searchCatsView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+             return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrEmpty()) {
+                    viewModel.refreshData()
+                } else {
+                    viewModel.search(newText.toString())
+                }
+             return false
+            }
+        })
+
+
+    /*
+
+        if ( searchCatsView.textView.text!= "" ) {
+            println("geldim")
+            var searchKey = searchCatsView.textView.text.toString()
+            viewModel.search(searchKey)
+        }
+
+         */
     }
 
     fun observeLiveData() {
@@ -68,7 +96,10 @@ open class HomePageFragment : Fragment() {
     }
 
     private fun initializeAdapter(){
-        val location = false
-        listAdapter = CatsListAdapter(viewModel.favoritesNumberList,location,viewModel.catss.value.onFavoritesChanged, arrayListOf())
+        listAdapter = CatsListAdapter(viewModel.favoritesNumberList,false,viewModel.catss.value.onFavoritesChanged, arrayListOf())
     }
+}
+
+private fun SearchView.setOnQueryTextListener(homePageFragment: HomePageFragment) {
+
 }

@@ -75,10 +75,12 @@ class CatsListAdapter(
             Log.d("tftt", favoritesNumberList[i].toString()+"--"+position.toString())
             if (favoritesNumberList[i] == position) {
                 i=favoritesNumberList.size
-                holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_yes)
+                holder.view.favorites = true
+               // holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_yes)
             }
             else{
-                holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_no)
+                holder.view.favorites = true
+               // holder.view.CatsRecyclerCatFavoritesButton.setImageResource(R.drawable.favorites_no)
             }
             i++
         }
